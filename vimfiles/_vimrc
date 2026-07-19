@@ -1,0 +1,263 @@
+" ===============================================
+" Plug 
+" ===============================================
+call plug#begin()
+Plug 'kien/ctrlp.vim'
+Plug 'mbbill/undotree'
+Plug 'chrisbra/colorizer'
+Plug 'preservim/nerdtree'
+Plug 'bounceme/poppy.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'bfrg/vim-cpp-modern'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'itchyny/vim-cursorword'
+Plug 'vim-airline/vim-airline'
+Plug 'farmergreg/vim-lastplace'
+Plug 'jeetsukumaran/vim-indentwise'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'Rigellute/shades-of-purple.vim'
+Plug 'catppuccin/vim', { 'as': 'catppuccin', 'branch': 'main' }
+Plug 'morhetz/gruvbox', { 'as': 'gruvbox', 'branch': 'master' }
+Plug 'nordtheme/vim', { 'as': 'nordtheme', 'branch': 'main' }
+Plug 'altercation/vim-colors-solarized', { 'as': 'solarized', 'branch': 'master' }
+call plug#end()
+
+" ===============================================
+" Font
+" ===============================================
+set lines=45 columns=100
+" set guifont=Intel\ One\ Mono:h12
+set guifont=Intel\ One\ Mono\ Medium:h12
+" set guifont=Intel\ One\ Mono\ Bold:h12
+" set guifont=Inconsolata\ ExtraBold:h12
+
+" ===============================================
+" Colorscheme
+" ===============================================
+" colorscheme nord
+" colorscheme gruvbox
+" colorscheme catppuccin_latte
+colorscheme catppuccin_frappe
+
+" ===============================================
+" File settings
+" ===============================================
+set nocompatible
+filetype plugin indent on
+syntax on
+set encoding=utf-8
+set fileencoding=utf-8
+set fileformats=unix,dos
+set updatetime=100
+set showmatch
+set background=dark
+" set background=light
+set showtabline=2
+set backspace=indent,eol,start
+set tabstop=2										" a tab is 2 spaces
+set autoindent
+set smartindent
+set noexpandtab
+set shiftwidth=2
+set hlsearch										" highlight searching
+set incsearch										" incremental searching
+" set softtabstop=2							" see multiple space characters as tabstops
+set ignorecase									" ignore case when searching
+" set history=1000							" remember more commands
+set cursorline
+set nocursorcolumn
+set nobackup
+set nowritebackup
+set noswapfile
+set list												" show some whitespaces
+set listchars=tab:»\ 
+set scrolloff=50								" cursor stays in the middle of the screen
+set number											" show numbers of lines
+set relativenumber
+let mapleader=" "
+let g:lastplace_ignore = "gitcommit,gitrebase,svn,hgcommit"
+let g:lastplace_ignore_buftype = "quickfix,nofile,help"
+let g:lastplace_open_folds = 0
+autocmd BufRead *.md syn match markdownError "\w\@<=_\w\@=" transparent contains=NONE
+
+" ===============================================
+" Mouse
+" ===============================================
+set mouse=
+set ttymouse=
+set mousehide " hide mouse when typing
+
+" ===============================================
+" Clipboard
+" ===============================================
+" Use system's clipboard
+vnoremap y <C-c>
+vnoremap p <C-v>
+vnoremap <C-c> "*y
+vmap <C-x> "+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <ESC>"+pa
+
+" ===============================================
+" Airline
+" ===============================================
+" let g:airline_powerline_fonts = 1
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+let g:shades_of_purple_airline = 1
+let g:airline_theme='shades_of_purple'
+" let g:airline_theme='deus'
+
+" ===============================================
+" Undo
+" ===============================================
+set undofile								" save undos after file closes
+set undolevels=100					" how many undos
+set undoreload=1000					" numbers of lines to save for undo
+set undodir=~/vimfiles/undo " where to save undo history
+
+" Write the old file out when switching between files.
+" set autowrite
+
+" Display current cursor position in lower right corner.
+set ruler
+
+"Better line wrapping
+set wrap
+set textwidth=79
+set formatoptions=qrn1
+
+"Enable/disable code folding
+" set foldenable
+set nofoldenable
+
+" How to fold
+set foldmethod=indent
+
+" More useful command-line completion
+set wildmenu
+
+"Auto-completion menu
+set wildmode=list:longest
+
+" Open splits below and on the right
+set splitbelow
+set splitright
+
+" indentLine
+let g:indentLine_color_term = 239
+let g:indentLine_char = '|'
+
+" wincmd p puts the cursor in the main window
+autocmd VimEnter * wincmd p
+
+" reload vim config
+nnoremap <leader>r :source ~/_vimrc<CR>
+
+" ===============================================
+" NERDTree
+" ===============================================
+" autocmd FileType c,h,cpp,java,sh,py nested :NERDTree
+let g:NERDTreeHijackNetrw=0
+" autocmd VimEnter * NERDTree | wincmd p
+" autocmd BufEnter * lcd %:p:h
+let g:NERDTreeWinSize = 30
+nnoremap <Leader>1 :NERDTreeToggle<CR>
+let NERDTreeShowHidden=0
+let g:NERDTreeDirArrows=0
+let NERDTreeAutoDeleteBuffer=1
+let NERDTreeCascadeOpenSingleChildDir=1
+let NERDTreeMinimalUI=1
+let NERDTreeShowLineNumbers=0
+let NERDTreeShowBookmarks=0
+let NERDTreeBookmarksFile="~/.NERDTreeBookmarks"
+" let NERDTreeMapOpenInTab='<ENTER>'
+let NERDTreeIgnore=['\.vim$', '\.o$', '\.pdf$', '\.png$', '\.jpg$', '\.doc$', '\.mp4$', '\.mp3$', '\.rar$', '\.zip$', '\~$']
+
+" ===============================================
+" Undotree
+" ===============================================
+nnoremap <Leader>u :UndotreeToggle<cr>
+if !exists('g:undotree_WindowLayout')
+  let g:undotree_WindowLayout = 1
+endif
+
+" undotree window width
+if !exists('g:undotree_SplitWidth')
+  let g:undotree_SplitWidth = 40
+endif
+
+" diff window height
+if !exists('g:undotree_DiffpanelHeight')
+  let g:undotree_DiffpanelHeight = 20
+endif
+
+" auto open diff window
+if !exists('g:undotree_DiffAutoOpen')
+  let g:undotree_DiffAutoOpen = 1
+endif
+
+" Highlight changed text
+if !exists('g:undotree_HighlightChangedText')
+  let g:undotree_HighlightChangedText = 1
+endif
+
+" ===============================================
+" Mappings
+" ===============================================
+" jk instead od ESC
+inoremap jk <ESC>
+
+nnoremap Y y$
+
+" Easier split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Faster commands
+nnoremap ; :
+
+" Move to the first non-blank character of the line
+nnoremap m ^
+
+" Move to the last non-blank character of the line
+nnoremap M $
+
+" Undo/Redo with arrows
+:map <Left> :undo<CR>
+:map <Right> :redo<CR>
+
+" Previous/Next function
+:map <Up> [[
+:map <Down> ]]
+
+" ctrl+n to off backlight during search in text
+noremap <C-n> :nohl<CR>
+vnoremap <C-n> :nohl<CR>
+inoremap <C-n> :nohl<CR>
+
+" jump to the end of pasted text
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+
+" leader-key maps
+" saving
+nnoremap <Leader>w :w<CR>
+" closing
+nnoremap <Leader>c :q<CR>
+" search and replace (cs - replace first match, n - next)
+vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+    \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+omap s :normal vs<CR>
+" splitting
+nnoremap <Leader>a :sp<CR>
+nnoremap <Leader>s :vsp<CR>
+nnoremap <Leader>k :resize +5<CR>
+nnoremap <Leader>j :resize -5<CR>
+
